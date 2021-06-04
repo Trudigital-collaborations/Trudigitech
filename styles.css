@@ -1,0 +1,17 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+#mly {
+  position: absolute;
+  height: 100%;
+  width: 66%;
+}
+#map {
+  position: absolute;
+  width: 34%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
