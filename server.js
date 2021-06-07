@@ -12,7 +12,7 @@ var osm = new L.TileLayer(osmUrl, {
 });
 map.addLayer(osm);
 
-let raster = new L.TileLayer(rasterUrl, {
+var raster = new L.TileLayer(rasterUrl, {
   maxZoom: 18,
 }).addTo(map);
 
@@ -28,6 +28,7 @@ mly.on(Mapillary.Viewer.nodechanged, function (node) {
 
   if (!marker) {
     marker = L.marker(latLon);
+    marker.bindPopup("<b>Welcome to MUK!!👋<b>").openPopup();
     marker.addTo(map);
   } else {
     marker.setLatLng(latLon);
@@ -36,41 +37,18 @@ mly.on(Mapillary.Viewer.nodechanged, function (node) {
   map.setView(latLon);
 });
 
+// layer control
+var baseMaps = {
+  raster: raster,
+  mapillary: mly,
+};
+
+var overlayMaps = {
+  marker: marker,
+};
+
+L.control.layers(baseMaps, overlayMaps).addTo(map);
+
 window.addEventListener("resize", function () {
   mly.resize();
 });
-
-var imageUrl = "http://www.lib.utexas.edu/maps/historical/newark_nj_1922.jpg",
-  imageBounds = [
-    [40.712216, -74.22655],
-    [40.773941, -74.12544],
-  ];
-L.imageOverlay(imageUrl, imageBounds).addTo(map);
-
-// var mlyVectorLayerConfig = {
-//   url: "https://tiles3.mapillary.com/v0.1/{z}/{x}/{y}.mvt",
-//   maxZoom: 14,
-//   style: function (feature) {
-//     var style = {};
-//     style.color = "rgba(53,175,109,0.7)";
-//     style.size = 3;
-
-//     return style;
-//   },
-// };
-
-// var mvtSource = new L.TileLayer.mvtSource(mlyVectorLayerConfig);
-// map.addLayer(mvtSource);
-// import { Viewer } from "mapillary-js";
-
-// const container = document.createElement("div");
-// container.style.width = "400px";
-// container.style.height = "300px";
-// document.body.appendChild(container);
-
-// const viewer = new Viewer({
-//   apiClient: "V0hwanhNa3BrWjFzS0Yxb0JXRnhoZDozOTcxYTQ3MDUzODY3MWE4",
-//   container: container,
-//   imageId: "Pz9D6VLi2oumer6jfcmgMw",
-// });
-// console.log(viewer);
